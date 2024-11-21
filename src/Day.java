@@ -9,6 +9,8 @@ public class Day {
     Soldiers sd = new Soldiers();
 
     StoryTell narr = new StoryTell();
+    Raid raid = new Raid();
+
     Scanner scan = new Scanner(System.in);
 
     private int dayNum = 1;
@@ -24,6 +26,14 @@ public class Day {
 
         System.out.println("Soldiers: " + sd.getNum() + "\n");
 
+        System.out.println("Would you like to raid?:"); //RAID
+        String[] todayRaid = raid.genRaid();
+        System.out.println("Aggressiveness: " + todayRaid[0]);
+        System.out.println("Food: " + todayRaid[1]);
+        System.out.println("Supplies: " + todayRaid[2]);
+        narr.story()
+
+
         System.out.println("How would you like to allocate your soldiers, Commander? (Put a percent w/out the sign)");
 
         System.out.print("Farm: ");
@@ -36,9 +46,6 @@ public class Day {
         System.out.print("Guard: ");
         defense.changeDefense(scan.nextInt() * 100/sd.getNum());
 
-
-        System.out.print("Moral: ");
-        moral.changeMoral(scan.nextInt()*100/sd.getNum());
 
 
 
