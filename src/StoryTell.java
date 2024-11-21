@@ -1,8 +1,8 @@
 import java.util.Scanner;
 
-public class storyTell {
+public class StoryTell {
     Scanner scan = new Scanner(System.in);
-    soldiers sd = new soldiers();
+    Soldiers sd = new Soldiers();
 
     // Method to display text and wait for user to press Enter
     public void storyBland(String text) {
