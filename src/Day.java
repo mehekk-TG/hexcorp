@@ -22,30 +22,9 @@ public class Day {
 
         dayNum();
         stats();
+        raid();
+        allocate();
 
-        //RAID
-        System.out.println("Would you like to raid?:");
-        String[] todayRaid = raid.genRaid();
-
-        System.out.println("Aggressiveness: " + todayRaid[0]);
-        System.out.println("Food: " + todayRaid[1]);
-        System.out.println("Supplies: " + todayRaid[2]);
-
-        String[] __ = {"Yes", "No"};
-        narr.story("", __);
-
-        //ALLOCATE SOLDIERS
-        System.out.println("How would you like to allocate your soldiers, Commander? (Put a percent w/out the sign)");
-
-        System.out.print("Farm: ");
-        int change = (int) (scan.nextInt()/100.0 * 50 + 1);
-        food.changeFood(change); //TODO: replace these with calculation functions in respective classes
-
-        System.out.print("Forage: ");
-        supplies.changeSupply(scan.nextInt()* 100/sd.getNum());
-
-        System.out.print("Guard: ");
-        defense.changeDefense(scan.nextInt() * 100/sd.getNum());
     }
 
     public void dayNum() {
@@ -74,7 +53,7 @@ public class Day {
         String[] __ = {"Yes", "No"};
 
         if (narr.story("", __) == 1) { // CHOICE
-            System.out.print("How many soldiers would you like to deploy?: ");
+            System.out.print("What percent of soldiers would you like to deploy?: ");
             int percRaid = scan.nextInt();
 
             while (percRaid > percentLeft || percRaid < 10) {
@@ -83,10 +62,44 @@ public class Day {
                 percRaid = scan.nextInt();
             }
 
+        if (raid.raidOutcome(percRaid, todayRaid[3], defense.getDefenseIndex(), moral.getMoralIndex())) { //OUTCOME: WIN
+            System.out.println("Success!\n");
+
+            food.changeFood(Integer.parseInt(todayRaid[1]));
+            supplies.changeSupply(Integer.parseInt(todayRaid[2]));
+            moral.changeMoral((int) (Math.random() * 10 + 1) * (Integer.parseInt(todayRaid[3]) + 1));
+            sd.changeSoldiers((int) (Math.random() * 100 + 25) * (1 + Integer.parseInt(todayRaid[3])));
+
+            stats();
+        }
+        else {
+            System.out.println("Fail!\n");
+
+            sd.changeSoldiers(-1* (int)(percRaid/400.0 * sd.getNum()));
+            moral.changeMoral((int)(Math.random() * 20 + 10));
+
+            stats();
+        }
 
 
         }
 
+    }
+
+    public void allocate() {
+        //TODO:
+
+        System.out.println("How would you like to allocate your soldiers, Commander? (Put a percent w/out the sign)");
+
+        System.out.print("Farm: ");
+        int change = (int) (scan.nextInt()/100.0 * 50 + 1);
+        food.changeFood(change); //TODO: replace these with calculation functions in respective classes
+
+        System.out.print("Forage: ");
+        supplies.changeSupply(scan.nextInt()* 100/sd.getNum());
+
+        System.out.print("Guard: ");
+        defense.changeDefense(scan.nextInt() * 100/sd.getNum());
     }
 
 }
