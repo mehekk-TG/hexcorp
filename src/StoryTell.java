@@ -44,9 +44,9 @@ public class StoryTell {
         System.out.println("- Raid --> Soldiers, Food, Supplies, Moral\n");
         System.out.println("Leftover soldiers will Rest, which increases Moral\n");
 
-        System.out.println("Raiding is risky! If you lose, you'll lose at least 25% of deployed soldiers and your\nMoral will drop! Make sure to take into account your Defense and Moral before raiding!\nThe bases you can raid will vary from day to day, with variations in their numbers,\nthe supplies they have, and their aggressiveness.\n");
+        System.out.println("Raiding is risky! If you lose, you'll lose at least 25% of deployed soldiers and your\nMoral will drop! Make sure to take into account your Defense and Moral before raiding!\nThe bases you can raid will vary from day to day, with variations in \nthe supplies they have, and their aggressiveness.\n");
 
-        System.out.println("Last but not least, random events may occur. Some of these require you to make a choice,\nwhich will affect your stats accordingly. Attacks from Hexcorp can also happen, so make\nsure to keep your Defense high to reduce and prevent them from happening.\n");
+        System.out.println("Last but not least, attacks may occur, so make sure to keep your Defense high to reduce and prevent them from happening.\n");
 
         System.out.println("That's all! Do your best, Commander!");
         scan.nextLine();

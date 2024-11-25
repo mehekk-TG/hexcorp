@@ -1,4 +1,5 @@
 
+import java.io.Serial;
 import java.util.Scanner;
 
 public class Day {
@@ -10,6 +11,8 @@ public class Day {
 
     StoryTell narr = new StoryTell();
     Raid raid = new Raid();
+    Attack attack = new Attack(true);
+    Attack kidtack = new Attack(false);
 
     Scanner scan = new Scanner(System.in);
 
@@ -22,7 +25,7 @@ public class Day {
 
         dayNum();
         stats();
-        raid();
+        //raid();
         allocate();
 
     }
@@ -58,7 +61,7 @@ public class Day {
 
             while (percRaid > percentLeft || percRaid < 10) {
                 System.out.println("Invalid Input");
-                System.out.print("How many soldiers would you like to deploy?: ");
+                System.out.print("What percent of soldiers would you like to deploy?: ");
                 percRaid = scan.nextInt();
             }
 
@@ -79,27 +82,35 @@ public class Day {
             moral.changeMoral((int)(Math.random() * 20 + 10));
 
             stats();
+            }
         }
-
-
-        }
-
     }
 
     public void allocate() {
-        //TODO:
-
         System.out.println("How would you like to allocate your soldiers, Commander? (Put a percent w/out the sign)");
 
-        System.out.print("Farm: ");
-        int change = (int) (scan.nextInt()/100.0 * 50 + 1);
-        food.changeFood(change); //TODO: replace these with calculation functions in respective classes
+        food.changeFood(getPerc("Farm"));
 
-        System.out.print("Forage: ");
-        supplies.changeSupply(scan.nextInt()* 100/sd.getNum());
+        supplies.changeSupply(getPerc("Forage"));
 
-        System.out.print("Guard: ");
-        defense.changeDefense(scan.nextInt() * 100/sd.getNum());
+        defense.changeDefense(getPerc("Guard"));
+
+        moral.changeMoral(percentLeft/2);
+    }
+
+    public int getPerc(String prompt) {
+        System.out.print(prompt + ": ");
+        int perc = scan.nextInt();
+        while (!(perc <= percentLeft && perc > -1)) {
+            System.out.print(prompt + ": ");
+            perc = scan.nextInt();
+        }
+        percentLeft -= perc;
+        return perc;
+    }
+
+    public void attk() {
+
     }
 
 }

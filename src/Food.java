@@ -13,4 +13,8 @@ public class Food {
     public void changeFood(int add) {
         foodIndex += add;
     }
+
+    public void changeFood(int perc, int moral) {
+        foodIndex +=(int) ((perc/100.0 * ( (Math.random()*.5+1) * 50)) * (moral/125.0 ));
+    }
 }

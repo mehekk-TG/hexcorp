@@ -13,4 +13,10 @@ public class Supplies {
     public void changeSupply(int add) {
         supplyIndex += add;
     }
+
+    public void changeSupply(int perc, int moral) {
+        supplyIndex += (int) ((perc/100.0 * ( (Math.random()*.5+1) * 50)) * (moral/125.0 ));
+    }
+
+
 }
