@@ -1,5 +1,4 @@
 
-import java.io.Serial;
 import java.util.Scanner;
 
 public class Day {
@@ -20,14 +19,23 @@ public class Day {
     private int percentLeft = 100; //USED TO MAKE SURE PLAYER DOESN'T OVERSTATE
 
 
-    public void day() {
+    public boolean[] day() {
         percentLeft = 100;
 
         dayNum();
         stats();
-        //raid();
-        allocate();
 
+        if (supplies.getSupplyIndex() > 25) {
+            raid();
+        }
+        else {
+            narr.storyBland("You don't have enough to raid today.");
+        }
+        allocate();
+        attk();
+        desert();
+
+        return endCheck();
     }
 
     public void dayNum() {
@@ -65,6 +73,8 @@ public class Day {
                 percRaid = scan.nextInt();
             }
 
+            percentLeft -= percRaid;
+
         if (raid.raidOutcome(percRaid, todayRaid[3], defense.getDefenseIndex(), moral.getMoralIndex())) { //OUTCOME: WIN
             System.out.println("Success!\n");
 
@@ -79,7 +89,7 @@ public class Day {
             System.out.println("Fail!\n");
 
             sd.changeSoldiers(-1* (int)(percRaid/400.0 * sd.getNum()));
-            moral.changeMoral((int)(Math.random() * 20 + 10));
+            moral.changeMoral(-1*(int)(Math.random() * 20 + 10));
 
             stats();
             }
@@ -95,7 +105,62 @@ public class Day {
 
         defense.changeDefense(getPerc("Guard"));
 
-        moral.changeMoral(percentLeft/2);
+        moral.changeMoral(percentLeft, food.getFoodIndex());
+    }
+
+    public void attk() {
+        if (kidtack.shouldAttack(defense.getDefenseIndex())) {
+            System.out.println("You got attacked!");
+
+            int[] damage = kidtack.atk();
+            food.changeFood(-1*damage[0]);
+            supplies.changeSupply(-1*damage[1]);
+            defense.changeDefense(-1*damage[2]);
+            moral.changeMoral(-1*damage[3]);
+            sd.changeSoldiers(-1*damage[4]);
+
+            stats();
+        }
+
+
+        else if (attack.shouldAttack(defense.getDefenseIndex()) && attack.shouldAttack(defense.getDefenseIndex())) {
+            System.out.println("You got attacked! (And it was pretty bad...)");
+
+            int[] damage = attack.atk();
+            food.changeFood(-1*damage[0]);
+            supplies.changeSupply(-1*damage[1]);
+            defense.changeDefense(-1*damage[2]);
+            moral.changeMoral(-1*damage[3]);
+            sd.changeSoldiers(-1*damage[4]);
+
+            stats();
+        }
+
+
+    }
+
+    public void desert() {
+        if (Math.random() * 100 > (food.getFoodIndex()*moral.getMoralIndex())/100.0) {
+            sd.changeSoldiers(-50);
+            narr.storyBland("50 soldiers left because of a lack of food or moral!");
+
+        }
+    }
+
+    public boolean[] endCheck() {
+        if (sd.getNum() > 5000) {
+            System.out.println("Wowzers! You got enough soldiers to beat Hexcorp and capture it's CEO (who was your long-lost sister btw)");
+            System.out.println("Good job :)");
+            return new boolean[] {true, false};
+        }
+        else if (sd.getNum() < 1000) {
+            System.out.println("Oh, you lost too many soldiers and got cooked by Hexcorp. Also the CEO was your long-lost sister");
+            System.out.println("Bad Commander! >:(");
+            return new boolean[] {false, true};
+        }
+        else {
+            return new boolean[] {false, false};
+        }
     }
 
     public int getPerc(String prompt) {
@@ -109,8 +174,6 @@ public class Day {
         return perc;
     }
 
-    public void attk() {
 
-    }
 
 }

@@ -13,4 +13,8 @@ public class Moral {
     public void changeMoral(int add) {
         moralIndex += add;
     }
+
+    public void changeMoral(int perc, int food) {
+        moralIndex += (int) ((perc/100.0 * ( (Math.random()*.5+1) * 50)) * (food/125.0 ));
+    }
 }
