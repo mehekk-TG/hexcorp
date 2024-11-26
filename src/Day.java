@@ -49,7 +49,7 @@ public class Day {
         System.out.println("Defense Index: "+ defense.getDefenseIndex());
         System.out.println("Moral Index: " + moral.getMoralIndex() + "\n");
 
-        System.out.println("Soldiers: " + sd.getNum() + "\n");
+        System.out.println(sd);
         scan.nextLine();
     }
 

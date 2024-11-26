@@ -14,4 +14,9 @@ public class Soldiers {
     public void changeSoldiers(int add) {
         soldierNum += add;
     }
+
+    public String toString() {
+        return "Soldiers: " + getNum();
+    }
+
 }
